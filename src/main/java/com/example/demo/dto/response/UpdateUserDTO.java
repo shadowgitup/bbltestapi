@@ -1,7 +1,5 @@
 package com.example.demo.dto.response;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,8 +9,8 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class GetUserDTO extends BaseResponse{
+public class UpdateUserDTO extends BaseResponse{
 
-    private List<Users> data;
-    
+    private Users data;
+
 }

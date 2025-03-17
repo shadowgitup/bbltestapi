@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.request.CreateUserReq;
+import com.example.demo.dto.request.UpdateUserReq;
 import com.example.demo.dto.response.BaseResponse;
 import com.example.demo.service.ApiService;
 import com.example.demo.utils.Constant;
@@ -56,9 +57,22 @@ public class ApiController {
 	}
 
     @PutMapping("/users")
-	public ResponseEntity<?>  updateUsers(@Valid @RequestBody CreateUserReq createUserReq, BindingResult result) {
+	public ResponseEntity<?>  updateUsers(@Valid @RequestBody UpdateUserReq updateUserReq, BindingResult result) {
+        
+        // Check if there are validation errors
+        if (result.hasErrors()) {
+            StringBuilder errorMessage = new StringBuilder("Validation failed: ");
+            result.getAllErrors().forEach(error -> {
+                errorMessage.append(error.getDefaultMessage()).append(" ");
+            });
 
-		return ResponseEntity.ok().body(apiService.updateUser(createUserReq));
+            BaseResponse res = new BaseResponse();
+            res.setCode(Constant.STATUS_FAIL_CODE);
+            res.setMessage(errorMessage.toString());
+            return ResponseEntity.badRequest().body(res);
+        }
+
+		return ResponseEntity.ok().body(apiService.updateUser(updateUserReq));
 	}
 
     @DeleteMapping("/users/{id}")
