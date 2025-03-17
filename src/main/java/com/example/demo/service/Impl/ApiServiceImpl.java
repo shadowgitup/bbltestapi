@@ -124,7 +124,7 @@ public class ApiServiceImpl implements ApiService{
 
         try {
 
-            restServiceUtils.getForObject(apiUrl, "/posts/"+id, CreateUserReq.class);
+            restServiceUtils.deleteForObject(apiUrl, "/posts/"+id, id);
 
             resp.setCode(Constant.STATUS_SUCCESS_CODE);
             resp.setMessage(Constant.STATUS_SUCCESS_MESSAGE);

@@ -8,6 +8,8 @@ public class CreateUserReq {
     @NotNull(message = "User Id cannot be null")
     private int userId;
 
+    private int id;
+
     @NotNull(message = "Title cannot be null")
     private String title;
 
@@ -20,6 +22,14 @@ public class CreateUserReq {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

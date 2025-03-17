@@ -3,12 +3,12 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.request.CreateUserReq;
@@ -19,25 +19,24 @@ import com.example.demo.utils.Constant;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api")
 public class ApiController {
 
     @Autowired
     private ApiService apiService;
 
-    @GetMapping("/listAllUsers")
+    @GetMapping("/users")
 	public ResponseEntity<?>  listAllUsers() {
 
 		return ResponseEntity.ok().body(apiService.getAllUser());
 	}
 
-    @GetMapping("/getUserById/{id}")
+    @GetMapping("/users/{id}")
 	public ResponseEntity<?>  GetUsersById(@PathVariable("id") Long id) {
 
 		return ResponseEntity.ok().body(apiService.getUserById(id));
 	}
 
-    @PostMapping("/createUser")
+    @PostMapping("/users")
 	public ResponseEntity<?>  createUsers(@Valid @RequestBody CreateUserReq createUserReq, BindingResult result) {
 
         // Check if there are validation errors
@@ -56,13 +55,13 @@ public class ApiController {
 		return ResponseEntity.ok().body(apiService.createUser(createUserReq));
 	}
 
-    @PutMapping("/updateUser")
+    @PutMapping("/users")
 	public ResponseEntity<?>  updateUsers(@Valid @RequestBody CreateUserReq createUserReq, BindingResult result) {
 
 		return ResponseEntity.ok().body(apiService.updateUser(createUserReq));
 	}
 
-    @GetMapping("/deleteUser/{id}")
+    @DeleteMapping("/users/{id}")
 	public ResponseEntity<?>  deleteUser(@PathVariable("id") Long id) {
 
 		return ResponseEntity.ok().body(apiService.deleteUser(id));

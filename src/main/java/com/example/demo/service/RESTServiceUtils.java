@@ -66,4 +66,19 @@ public class RESTServiceUtils {
         }
     }
 
+    public <T> void deleteForObject(String apiUrl, String endpoint, Long id) {
+        RestTemplate rest = builder.build();
+    
+        try {
+            String url = UriComponentsBuilder.fromUriString(apiUrl)
+                    .path(endpoint)
+                    .toUriString();
+    
+            rest.delete(url, id);
+
+        } catch (Exception e) {
+            logger.info(e.getMessage());
+        }
+    }
+
 }
