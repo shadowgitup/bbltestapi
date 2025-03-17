@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.request.CreateUserReq;
 import com.example.demo.dto.response.BaseResponse;
+import com.example.demo.dto.response.CreateUserDTO;
 import com.example.demo.dto.response.GetAllUsersResp;
 import com.example.demo.dto.response.GetUserByIdDTO;
 import com.example.demo.dto.response.GetUserDTO;
@@ -83,17 +84,20 @@ public class ApiServiceImpl implements ApiService{
     }
 
     @Override
-    public BaseResponse createUser(CreateUserReq createUserReq) {
+    public CreateUserDTO createUser(CreateUserReq createUserReq) {
         logger.info("Start createUser");
 
-        BaseResponse resp = new BaseResponse();
+        CreateUserDTO resp = new CreateUserDTO();
 
         try {
 
-            restServiceUtils.postForObject(apiUrl, "/posts", createUserReq, CreateUserReq.class);
+            Users userObject= restServiceUtils.postForObject(apiUrl, "/posts", createUserReq, Users.class);
 
-            resp.setCode(Constant.STATUS_SUCCESS_CODE);
-            resp.setMessage(Constant.STATUS_SUCCESS_MESSAGE);
+            if(userObject != null){
+                resp.setData(userObject);
+                resp.setCode(Constant.STATUS_SUCCESS_CODE);
+                resp.setMessage(Constant.STATUS_SUCCESS_MESSAGE);
+            }
             
         } catch (Exception e) {
             logger.info("createUser error:"+e.getMessage());
